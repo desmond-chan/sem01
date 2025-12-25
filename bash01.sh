@@ -1,1 +1,1 @@
-python3 hello2.py myname
+python3 hello2.py "$myname"
