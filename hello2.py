@@ -1,1 +1,1 @@
-print('my name', myname)
+print('my title', mytitle)
