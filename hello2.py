@@ -1,4 +1,4 @@
 import os
-
-myname = os.environ.get('myname', 'Default Name')  # Use 'myname' as the key (from the survey Name field)
+print("Environment vars:", os.environ)
+myname = os.environ.get('myname', 'Default Name')
 print('My Name is ', myname)
