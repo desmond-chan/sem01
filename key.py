@@ -1,25 +1,30 @@
-#!/usr/bin/env python3
-import sys
-import os
+# Print all Key Store environment variables from Semaphore
+print("=== Semaphore Key Store Information ===\n")
 
-# Get the first argument after the script name
-arg = sys.argv[1]
+# Get all environment variables
+env_vars = os.environ
 
-# Parse the argument
-if "=" in arg:
-    key, value = arg.split("=", 1)
-    name = value
+# Look for key-related environment variables
+# Semaphore typically uses patterns like:
+# - SEMAPHORE_KEY_NAME
+# - SEMAPHORE_KEY_LOGIN
+# - Or with key ID/name suffix for multiple keys
+
+key_info = {}
+for key, value in env_vars.items():
+    if 'KEY' in key.upper() and 'SEMAPHORE' in key.upper():
+        key_info[key] = value
+
+if key_info:
+    print("Found Key Store variables:")
+    for key, value in sorted(key_info.items()):
+        print(f"{key}: {value}")
 else:
-    name = arg
+    print("No Key Store variables found in environment.")
+    print("\nNote: Key Store variables are only available during task execution")
+    print("when keys are associated with the task in Semaphore UI.")
 
-# Print the name (same functionality as hello2.py)
-print("My name is ", name)
-
-# Check if key name from environment is 'ipf'
-# Semaphore stores Key Store variables as environment variables
-key_name = os.environ.get('SEMAPHORE_KEY_NAME', '')
-key_login = os.environ.get('SEMAPHORE_KEY_LOGIN', '')
-
-if key_name == 'ipf':
-    print(f"Key Name: {key_name}")
-    print(f"Login: {key_login}")
+print("\n=== All Environment Variables (for debugging) ===")
+for key in sorted(env_vars.keys()):
+    if 'SEMAPHORE' in key or 'KEY' in key:
+        print(f"{key}={env_vars[key]}")
