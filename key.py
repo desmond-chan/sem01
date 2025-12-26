@@ -1,3 +1,4 @@
+import os
 # Print all Key Store environment variables from Semaphore
 print("=== Semaphore Key Store Information ===\n")
 
